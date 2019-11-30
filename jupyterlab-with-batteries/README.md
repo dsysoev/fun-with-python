@@ -77,5 +77,4 @@ browse demo.slides.html
 
 # Helpful links
 
--
-https://github.com/mauhai/awesome-jupyterlab
+- [awesome-jupyterlab](https://github.com/mauhai/awesome-jupyterlab)

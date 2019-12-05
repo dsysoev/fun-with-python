@@ -21,10 +21,13 @@ sudo apt-get install -y nodejs
 # Install jupyterlab
 
 ```bash
+# pip install virtualenvwrapper 
+# for windows 
+# pip install virtualenvwrapper-win
 # create new virtualenv
-mkvirtualenv --python /usr/bin/python3 lab
+mkvirtualenv lab
 # install packages
-pip install jupyterlab nbconvert plotly altair matplotlib seaborn pandas numpy psutil ipympl
+pip install jupyterlab nbconvert plotly altair matplotlib seaborn pandas numpy psutil ipympl nb_black
 ```
 
 # Install batteries

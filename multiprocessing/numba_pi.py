@@ -1,10 +1,11 @@
 
-from numba import jit
+from numba import njit
 import numpy as np
 
 
-@jit(forceobj=True)
-def numpy_calc_pi(n_samples):
-    rand = np.random.uniform(size=(2, int(n_samples)))
-    count = ((rand ** 2).sum(axis=0) <= 1).sum()
-    return count * 4 / n_samples
+@njit(parallel=True)
+def numba_calc_pi(n_samples):
+    
+    x = np.random.ranf(n_samples)
+    y = np.random.ranf(n_samples)
+    return 4 * np.sum(x ** 2 + y ** 2 < 1) / n_samples

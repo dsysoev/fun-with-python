@@ -4,6 +4,6 @@ import numpy as np
 
 
 def numexpr_pi(n_samples):
-    rand = np.random.uniform(size=(2, int(n_samples)))
-    s = ne.evaluate("sum(rand ** 2, axis=0)")
-    return ne.evaluate("sum(where(s <= 1, 1, 0))") * 4 / n_samples
+    x = np.random.ranf(n_samples)
+    y = np.random.ranf(n_samples)
+    return 4 * ne.evaluate("sum(where((x ** 2 + y ** 2) < 1, 1, 0))") / n_samples

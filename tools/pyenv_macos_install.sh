@@ -26,22 +26,36 @@ if ! [ -x "$(command -v pyenv)" ]; then
   brew install pyenv
   # install pyenv-virtualenv
   brew install pyenv-virtualenv
-  # update parameters of enviroment
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-  # add option for fix bug with matplotlib on macos
-  env PYTHON_CONFIGURE_OPTS="--enable-framework CC=clang" pyenv install -v "${PYTHON_VERSION}"
-  # initialize terminal
-  reset
+  # add ROOT folder
+  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+  echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
 fi
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+# initialize terminal
+reset
+# add option for fix bug with matplotlib on macos
+env PYTHON_CONFIGURE_OPTS="--enable-framework CC=clang" pyenv install -v "${PYTHON_VERSION}"
 # create enviroment
 pyenv virtualenv "${PYTHON_VERSION}" "${ENV_NAME}"
 # activate enviroment
 pyenv activate "${ENV_NAME}"
 # update pip
 pip install --upgrade pip
+pip install --upgrade setuptools
 # install requrements from file
 pip install -r "${PYTHON_REQUIREMENTS_FILE}"
+
+#
+#https://github.com/pypa/pip/issues/7254#issuecomment-546119909/
+brew update && brew upgrade && brew install openssl
+##note: some people report that the dylib files needed in #3 are in the 1.0.2t folder, rather than the lib folder. adjust your path in #2 as needed.
+cd /usr/local/Cellar/openssl/1.0.2t/lib
+sudo cp libssl.1.0.0.dylib libcrypto.1.0.0.dylib /usr/local/lib/
+cd /usr/local/lib
+sudo ln -s libssl.1.0.0.dylib libssl.dylib
+sudo ln -s libcrypto.1.0.0.dylib libcrypto.dylib
+
+#https://github.com/pyca/pyopenssl/issues/728#issuecomment-390099034
+pip uninstall pyOpenSSL
